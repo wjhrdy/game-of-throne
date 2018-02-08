@@ -1,16 +1,16 @@
 {
-  "name": "poop",
+  "name": "shower",
   "version": "1.0.0",
-  "description": "A thing that tells you if you can poop",
+  "description": "A thing that tells you if you can shower",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "poop"
+    "shower"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "follow-redirects": "^1.2.3",
     "pi-gpio": "0.0.8"

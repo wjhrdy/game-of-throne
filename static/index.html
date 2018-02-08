@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Can I Go Yet???</title>
+  <title>Can I Shower Yet???</title>
   <style type="text/css">
     html {
       height: 100%
@@ -53,7 +53,7 @@
       <p style="color:grey">(refreshes every 5 seconds)</p>
     </div>
 
-    <a class="download" href="https://s3.us-east-2.amazonaws.com/canigoyet.teespring.com/CanIGoYet.app.zip">Download the app</a>
+    <a class="download" href="https://s3.amazonaws.com/shower.willygood.site/CanIGoYet.app.zip">Download the mac app</a>
     
   </div>
 
@@ -80,7 +80,7 @@
           "Last Updated at: " + local_datetime.toLocaleString()
         }
       };
-      xhttp.open("GET", "https://canigoyet.teespring.com/state", true);
+      xhttp.open("GET", "https://shower.willygood.site/state", true);
       xhttp.send();
     }
 
@@ -93,7 +93,7 @@
           lastUpdatedTime = new Date(status.UpdatedDate)
         }
       };
-      xhttp.open("GET", "https://canigoyet.teespring.com/last_updated", true);
+      xhttp.open("GET", "https://shower.willygood.site/last_updated", true);
       xhttp.send();
     }
 

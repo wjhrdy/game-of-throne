@@ -25,7 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             if isUrgent {
                 timer = Timer(timeInterval: 0.2, target: self, selector: #selector(showCrazyIcon), userInfo: nil, repeats: true)
                 RunLoop.current.add(timer!, forMode: .defaultRunLoopMode)
-                statusItem.menu?.items.first?.title = "😳"
+                statusItem.menu?.items.first?.title = "😓 Notify me when available"
             } else {
                 timer?.invalidate()
                 timer = nil
@@ -74,7 +74,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     private func setupMenu() {
         let menu = NSMenu()
-        menu.addItem(NSMenuItem(title: "😳", action: #selector(firstMenuItemSelected(_:)), keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: "😓 Notify me when vacant", action: #selector(firstMenuItemSelected(_:)), keyEquivalent: ""))
         menu.addItem(NSMenuItem.separator())
         menu.addItem(NSMenuItem(title: "Quit", action: #selector(quit(_:)), keyEquivalent: "q"))
         menu.autoenablesItems = false
@@ -93,7 +93,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     @objc private func fetchAndUpdateStatus() {
-        let url = "https://canigoyet.teespring.com/state"
+        let url = "https://shower.rw.observer/state"
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
         let session = URLSession.shared
@@ -111,7 +111,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     private var selectedAssetIndex = 0
     @objc private func showCrazyIcon() {
-        let assets = ["ex01", "ex02", "ex03", "ex04", "ex05"]
+        let assets = ["ex01", "ex02"]
         let asset = assets[selectedAssetIndex % assets.count]
         statusItem.button?.image = NSImage(named: asset)
         selectedAssetIndex += 1
@@ -125,7 +125,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc private func displayNotification() {
         fetchFortune { fortune in
             let notification = NSUserNotification()
-            notification.title = "The toilet is available"
+            notification.title = "The shower is available"
             notification.informativeText = "\"\(fortune)\""
             notification.soundName = "Poop.wav"
             NSUserNotificationCenter.default.deliver(notification)
@@ -155,7 +155,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
     
     func menuWillOpen(_ menu: NSMenu) {
-        let title = isUrgent ? "😌" : "😳"
+        let title = isUrgent ? "😊 Don't notify me" : "😓 Notify me when vacant"
         statusItem.menu?.items.first?.title = title
         menu.items.first?.isHidden = status != .occupied
     }

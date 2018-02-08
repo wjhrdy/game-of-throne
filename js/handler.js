@@ -2,10 +2,10 @@
 
 let s3connector = require('./s3connector').init()
 
-module.exports.pooperBusy = (event, context, callback) => {
+module.exports.showerBusy = (event, context, callback) => {
   s3connector.updatePoopStatusFileBusy()
   .then(function () {
-    pooperLastUpdated().catch(function (err) {
+    showerLastUpdated().catch(function (err) {
       console.log('Caught an error while updating last updated file: ' + err)
     })
 
@@ -15,10 +15,10 @@ module.exports.pooperBusy = (event, context, callback) => {
   })
 }
 
-module.exports.pooperFree = (event, context, callback) => {
+module.exports.showerFree = (event, context, callback) => {
   s3connector.updatePoopStatusFileFree()
     .then(function () {
-      pooperLastUpdated().catch(function (err) {
+      showerLastUpdated().catch(function (err) {
         console.log('Caught an error while updating last updated file: ' + err)
       })
 
@@ -28,7 +28,7 @@ module.exports.pooperFree = (event, context, callback) => {
     })
 }
 
-function pooperLastUpdated () {
+function showerLastUpdated () {
   return new Promise(function (resolve, reject) {
     let promises = []
     promises.push(s3connector.getStateFiles('state'))

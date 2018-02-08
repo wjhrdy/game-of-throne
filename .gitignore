@@ -2,3 +2,4 @@ node_modules
 .tags*
 .env
 .serverless
+macOS/WhoPooping/.DS_Store

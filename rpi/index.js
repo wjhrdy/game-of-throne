@@ -3,12 +3,12 @@ var http = require('follow-redirects').http
 
 const exec = require('child_process').exec
 
-let POOP_READ_PORT = 24
+let SHOWER_READ_PORT = 24
 
 console.log('Starting...')
 
 sendStatus()
-initPort(POOP_READ_PORT, function () {
+initPort(SHOWER_READ_PORT, function () {
   setInterval(sendStatus, 5000)
 })
 
@@ -41,13 +41,13 @@ function initPort (port, callback) {
 }
 
 function sendStatus () {
-  readPort(POOP_READ_PORT, function (status) {
-    var path = '/dev/poop/free'
+  readPort(SHOWER_READ_PORT, function (status) {
+    var path = '/dev/shower/free'
     if (status.trim() === '1') {
-      path = '/dev/poop/busy'
+      path = '/dev/shower/busy'
     }
     http.get({
-      hostname: '1r2pwixx9j.execute-api.us-east-1.amazonaws.com',
+      hostname: '5crnt4ra63.execute-api.us-east-1.amazonaws.com',
       port: 80,
       path: path
     }, (res) => {

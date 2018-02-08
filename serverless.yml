@@ -11,7 +11,7 @@
 #
 # Happy Coding!
 
-service: aws-nodejs # NOTE: update this with your service name
+service: aws-nodejs-shower # NOTE: update this with your service name
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -30,7 +30,7 @@ provider:
       - Effect: Allow
         Action:
           - s3:*
-        Resource: arn:aws:s3:::canigoyet.teespring.com/*
+        Resource: arn:aws:s3:::shower.willygood.site/*
 #    - Effect: "Allow"
 #      Action:
 #        - "s3:PutObject"
@@ -58,18 +58,18 @@ package:
     - rpi/**
 
 functions:
-  pooperBusy:
-    handler: js/handler.pooperBusy
+  showerBusy:
+    handler: js/handler.showerBusy
     events:
      - http:
-         path: poop/busy
+         path: shower/busy
          method: get
          cors: true
-  pooperFree:
-    handler: js/handler.pooperFree
+  showerFree:
+    handler: js/handler.showerFree
     events:
       - http:
-          path: poop/free
+          path: shower/free
           method: get
           cors: true
 

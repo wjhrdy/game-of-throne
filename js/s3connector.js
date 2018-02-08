@@ -1,9 +1,9 @@
 'use strict'
 
 let S3 = require('aws-sdk/clients/s3')
-let POOP_BUCKET = 'canigoyet.teespring.com'
-let POOP_STATUS_FILE_NAME = 'state'
-let POOP_LAST_UPDATED_FILE_NAME = 'last_updated'
+let SHOWER_BUCKET = 'shower.willygood.site'
+let SHOWER_STATUS_FILE_NAME = 'state'
+let SHOWER_LAST_UPDATED_FILE_NAME = 'last_updated'
 
 module.exports.init = function () {
   S3 = new S3({
@@ -41,8 +41,8 @@ module.exports.getStateFiles = function (fileName) {
 
 function updatePoopStatusParams (isFree) {
   return {
-    Bucket: POOP_BUCKET,
-    Key: POOP_STATUS_FILE_NAME,
+    Bucket: SHOWER_BUCKET,
+    Key: SHOWER_STATUS_FILE_NAME,
     ACL: 'public-read',
     Body: JSON.stringify({state: isFree, UpdatedDate: new Date().toISOString()})
   }
@@ -50,8 +50,8 @@ function updatePoopStatusParams (isFree) {
 
 function getUpdateParams (stateFile) {
   return {
-    Bucket: POOP_BUCKET,
-    Key: POOP_LAST_UPDATED_FILE_NAME,
+    Bucket: SHOWER_BUCKET,
+    Key: SHOWER_LAST_UPDATED_FILE_NAME,
     ACL: 'public-read',
     Body: JSON.stringify(stateFile)
   }
@@ -59,7 +59,7 @@ function getUpdateParams (stateFile) {
 
 function generateGetObjectParams (fileName) {
   return {
-    Bucket: POOP_BUCKET,
+    Bucket: SHOWER_BUCKET,
     Key: fileName
   }
 }

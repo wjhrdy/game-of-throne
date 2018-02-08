@@ -93,7 +93,7 @@
 				TargetAttributes = {
 					8DD873001E8CA94D0096C7F9 = {
 						CreatedOnToolsVersion = 8.3;
-						DevelopmentTeam = A56D86G827;
+						DevelopmentTeam = 6RLUU7JQ93;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -250,7 +250,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = A56D86G827;
+				DEVELOPMENT_TEAM = 6RLUU7JQ93;
 				INFOPLIST_FILE = WhoPooping/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mikekavouras.CanIGoYet;
@@ -266,7 +266,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = A56D86G827;
+				DEVELOPMENT_TEAM = 6RLUU7JQ93;
 				INFOPLIST_FILE = WhoPooping/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mikekavouras.CanIGoYet;
