@@ -2,8 +2,9 @@
 var http = require('follow-redirects').http
 
 const exec = require('child_process').exec
+const floor = 'three'
 
-let SHOWER_READ_PORT = 24
+let SHOWER_READ_PORT = 23
 
 console.log('Starting...')
 
@@ -42,9 +43,9 @@ function initPort (port, callback) {
 
 function sendStatus () {
   readPort(SHOWER_READ_PORT, function (status) {
-    var path = '/dev/shower/free'
+    var path = '/dev/shower/busy/three'
     if (status.trim() === '1') {
-      path = '/dev/shower/busy'
+      path = '/dev/shower/free/three'
     }
     http.get({
       hostname: '5crnt4ra63.execute-api.us-east-1.amazonaws.com',

@@ -3,9 +3,10 @@
 let s3connector = require('./s3connector').init()
 
 module.exports.showerBusy = (event, context, callback) => {
-  s3connector.updatePoopStatusFileBusy()
+  const floor = event.pathParameters.floor;
+  s3connector.updateShowerStatusFileBusy(floor)
   .then(function () {
-    showerLastUpdated().catch(function (err) {
+    showerLastUpdated(floor).catch(function (err) {
       console.log('Caught an error while updating last updated file: ' + err)
     })
 
@@ -16,9 +17,10 @@ module.exports.showerBusy = (event, context, callback) => {
 }
 
 module.exports.showerFree = (event, context, callback) => {
-  s3connector.updatePoopStatusFileFree()
+  const floor = event.pathParameters.floor;
+  s3connector.updateShowerStatusFileFree(floor)
     .then(function () {
-      showerLastUpdated().catch(function (err) {
+      showerLastUpdated(floor).catch(function (err) {
         console.log('Caught an error while updating last updated file: ' + err)
       })
 
@@ -28,16 +30,16 @@ module.exports.showerFree = (event, context, callback) => {
     })
 }
 
-function showerLastUpdated () {
+function showerLastUpdated (floor) {
   return new Promise(function (resolve, reject) {
     let promises = []
-    promises.push(s3connector.getStateFiles('state'))
-    promises.push(s3connector.getStateFiles('last_updated'))
+    promises.push(s3connector.getStateFiles('state', floor))
+    promises.push(s3connector.getStateFiles('last_updated', floor))
     Promise.all(promises).then(function (data) {
       let currentStateObject = JSON.parse(String.fromCharCode.apply(null, data[0].Body))
       let lastUpdatedObject = JSON.parse(String.fromCharCode.apply(null, data[1].Body))
       if (currentStateObject.state !== lastUpdatedObject.state) {
-        s3connector.updatePoopLastUpdatedFile(currentStateObject).then(function () {
+        s3connector.updateShowerLastUpdatedFile(currentStateObject, floor).then(function () {
           resolve(true)
         })
       } else {

@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Can I Shower Yet???</title>
+  <meta charset="utf-8">
+  <title>Can I Shower Yet?</title>
+  <meta name="description" content="">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+  <meta http-equiv="cleartype" content="on">
   <style type="text/css">
     html {
-      height: 100%
+        font-family: sans-serif; /* 1 */
+        -ms-text-size-adjust: 100%; /* 2 */
+        -webkit-text-size-adjust: 100%; /* 2 */
     }
     body {
       height: 100%;
@@ -12,16 +20,26 @@
       align-items: center;
       justify-content: center;
       text-align: center;
+      overflow: hidden;
+      font-size: 1em;
+      line-height: 1.4;
+      margin: 0;
     }
 
-    #updated {
+    #updatedthree {
+      margin-bottom: 6px;
+    }
+    #updatedfour {
       margin-bottom: 6px;
     }
 
     a {
       text-decoration: none;
     }
-
+    h1 {
+      font-size: 2em;
+      margin: 0.67em 0;
+    }
     .download {
       display: inline-block;
       border-radius: 4px;
@@ -38,70 +56,113 @@
 
   </style>
 </head>
-<body onload="getTolietStatus(); display_clock();">
+<body onload="getShowerStatus(); display_clock();">
   <div id="main_container">
-    <h1 id="status">
+    <h1>
+      Can I shower yet?
+    </h1>
+    
+    <h1>
+      4th floor
+    </h1>
+
+    <h1 id="statusfour">
       Updating...
     </h1>
 
-    <div id="updated">
+    <div id="updatedfour">
     </div>
 
-    <div id="time">Time in current state: 0 hours 0 minutes 0 seconds</div>
+    <div id="timefour">Time in current state: 0 hours 0 minutes 0 seconds</div>
+
+    <div>
+      <p style="color:grey">(refreshes every 5 seconds)</p>
+    </div>
+    <h1>
+      3rd floor
+    </h1>
+    
+    <h1 id="statusthree">
+      Updating...
+    </h1>
+
+    <div id="updatedthree">
+    </div>
+
+    <div id="timethree">Time in current state: 0 hours 0 minutes 0 seconds</div>
 
     <div>
       <p style="color:grey">(refreshes every 5 seconds)</p>
     </div>
 
-    <a class="download" href="https://s3.amazonaws.com/shower.willygood.site/CanIGoYet.app.zip">Download the mac app</a>
+    <!-- <a class="download" href="https://s3.amazonaws.com/shower.willygood.site/CanIGoYet.app.zip">Download the mac app</a> -->
+    <!-- <a class="download" href="https://s3.amazonaws.com/shower.willygood.site/CanIGoYet.app.zip">Download the mac app</a> -->
     
   </div>
 
   <script type="text/javascript">
-    var lastUpdatedTime = new Date();
-    setInterval(display, 1000);
+    var lastUpdatedTimeFour = new Date();
+    var lastUpdatedTimeThree = new Date();
+    setInterval(display, 1000, "four");
+    setInterval(display, 1000, "three");
 
-    function getTolietStatus() {
-      setTimeout(getTolietStatus, 5000);
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
+    function getShowerStatus(floor) {
+        if (floor === "four" || floor == null) 
+        setTimeout(getShowerStatus, 5000, "four");
+        if (floor === "three" || floor == null) 
+        setTimeout(getShowerStatus, 5000, "three");
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           var status = JSON.parse(this.responseText);
           if (status.state == "YES") {
-            document.getElementById("status").style.color = 'Green'
+            document.getElementById("status"+floor).style.color = 'Green'
           }
           else {
-            document.getElementById("status").style.color = 'Red'
+            document.getElementById("status"+floor).style.color = 'Red'
           }
-          document.getElementById("status").innerHTML =
+          document.getElementById("status"+floor).innerHTML =
           status.state
           var local_datetime = new Date(status.UpdatedDate)
-          document.getElementById("updated").innerHTML =
+          document.getElementById("updated"+floor).innerHTML =
           "Last Updated at: " + local_datetime.toLocaleString()
         }
       };
-      xhttp.open("GET", "https://shower.willygood.site/state", true);
+      if (!(floor == null || floor === undefined)) {
+      xhttp.open("GET", "https://shower.willygood.site/state"+floor, true);
       xhttp.send();
     }
+    }
 
-    function display_clock() {
-      setTimeout(display_clock, 5000);
-      var xhttp = new XMLHttpRequest();
+    function display_clock(floor) {
+      if (floor === "four" || floor == null || floor === undefined) 
+        setTimeout(display_clock, 5000, "four");
+      if (floor === "three" || floor == null || floor === undefined) 
+        setTimeout(display_clock, 5000, "three");
+        var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           var status = JSON.parse(this.responseText);
-          lastUpdatedTime = new Date(status.UpdatedDate)
-        }
-      };
-      xhttp.open("GET", "https://shower.willygood.site/last_updated", true);
-      xhttp.send();
+          if (floor === "four") 
+            lastUpdatedTimeFour = new Date(status.UpdatedDate)
+          if (floor === "three") 
+            lastUpdatedTimeThree = new Date(status.UpdatedDate)
+      }
+    };
+      if (!(floor == null || floor === undefined)) {
+        xhttp.open("GET", "https://shower.willygood.site/last_updated"+floor, true);
+        xhttp.send();
+      }
     }
 
-    function display() {
+    function display(floor) {
       // later record end time
       var endTime = new Date();
       // time difference in ms
-      var timeDiff = endTime - lastUpdatedTime;
+      if (floor === "four") 
+            var timeDiff = endTime - lastUpdatedTimeFour;
+      if (floor === "three") 
+            var timeDiff = endTime - lastUpdatedTimeThree;
       // strip the miliseconds
       timeDiff /= 1000;
       // get seconds
@@ -117,7 +178,7 @@
       // remove hours from the date
       timeDiff = Math.floor(timeDiff / 24);
 
-      document.getElementById("time").innerHTML = "Time in current state: " + hours + " hours " + minutes + " minutes " + seconds + " seconds";
+      document.getElementById("time"+floor).innerHTML = "Time in current state: " + hours + " hours " + minutes + " minutes " + seconds + " seconds";
     }
   </script>
 

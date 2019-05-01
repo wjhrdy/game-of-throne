@@ -15,43 +15,43 @@ module.exports.init = function () {
   return this
 }
 
-module.exports.updatePoopStatusFileBusy = function () {
+module.exports.updateShowerStatusFileBusy = function (floor) {
   return new Promise((resolve, reject) => {
-    S3.putObject(updatePoopStatusParams('NO'), handlePromiseError(resolve, reject))
+    S3.putObject(updateShowerStatusParams('NO',floor), handlePromiseError(resolve, reject))
   })
 }
 
-module.exports.updatePoopStatusFileFree = function () {
+module.exports.updateShowerStatusFileFree = function (floor) {
   return new Promise((resolve, reject) => {
-    S3.putObject(updatePoopStatusParams('YES'), handlePromiseError(resolve, reject))
+    S3.putObject(updateShowerStatusParams('YES',floor), handlePromiseError(resolve, reject))
   })
 }
 
-module.exports.updatePoopLastUpdatedFile = function (stateFile) {
+module.exports.updateShowerLastUpdatedFile = function (stateFile, floor) {
   return new Promise((resolve, reject) => {
-    S3.putObject(getUpdateParams(stateFile), handlePromiseError(resolve, reject))
+    S3.putObject(getUpdateParams(stateFile, floor), handlePromiseError(resolve, reject))
   })
 }
 
-module.exports.getStateFiles = function (fileName) {
+module.exports.getStateFiles = function (fileName, floor) {
   return new Promise((resolve, reject) => {
-    S3.getObject(generateGetObjectParams(fileName), handlePromiseError(resolve, reject))
+    S3.getObject(generateGetObjectParams(fileName + floor), handlePromiseError(resolve, reject))
   })
 }
 
-function updatePoopStatusParams (isFree) {
+function updateShowerStatusParams (isFree, floor) {
   return {
     Bucket: SHOWER_BUCKET,
-    Key: SHOWER_STATUS_FILE_NAME,
+    Key: SHOWER_STATUS_FILE_NAME + floor,
     ACL: 'public-read',
     Body: JSON.stringify({state: isFree, UpdatedDate: new Date().toISOString()})
   }
 }
 
-function getUpdateParams (stateFile) {
+function getUpdateParams (stateFile, floor) {
   return {
     Bucket: SHOWER_BUCKET,
-    Key: SHOWER_LAST_UPDATED_FILE_NAME,
+    Key: SHOWER_LAST_UPDATED_FILE_NAME + floor,
     ACL: 'public-read',
     Body: JSON.stringify(stateFile)
   }
